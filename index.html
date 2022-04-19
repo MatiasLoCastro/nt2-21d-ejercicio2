@@ -12,26 +12,49 @@
 
 </head>
 
-
 <div class="container-fluid mt-3" id="app">
-    <input type="text" class="form-control" v-model="criterioDeBusqueda"
-        placeholder="Ingresar un criterio de busqueda...">
-    <br>
-    <div class="card-deck m-0">
-        <div class="row">
-            <div class="col" v-for="persona in personasFiltradas">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">{{getNombreCompleto(persona)}}</h5>
-                        <p class="card-text">dni {{persona.dni}}</p>
-                        <a href="#" class="card-link">{{persona.correo}}</a>
+    <input type="text" class="form-control" v-model="criterioDeBusqueda" placeholder="Filtro por dni">
+    <div class="col" v-for="persona in filtroPorDni">
+
+    </div>
+    <div class="container-fluid mt-3" id="app">
+        <input type="text" class="form-control" v-model="criterioDeBusqueda"
+            placeholder="Ingresar un criterio de busqueda...">
+        <br>
+
+        <div class="card-deck m-0">
+            <div class="row">
+                <div class="col" v-for="persona in filtroPorDni">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">{{getNombreCompleto(persona)}}</h5>
+                            <p class="card-text">dni {{persona.dni}}</p>
+                            <a href="#" class="card-link">{{persona.correo}}</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="card-deck m-0">
+            <div class="row">
+                <div class="col" v-for="persona in filtroPorNombreYApellido">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">{{getNombreCompleto(persona)}}</h5>
+                            <p class="card-text">dni {{persona.dni}}</p>
+                            <a href="#" class="card-link">{{persona.correo}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-</div>
+
+
+
 
 </html>
 
@@ -49,10 +72,10 @@
                     dni: "20442873"
                 },
                 {
-                    nombre: "...",
-                    apellido: "...",
-                    correo: "...",
-                    dni: "..."
+                    nombre: "Matias",
+                    apellido: "Lo Castro",
+                    correo: "matias.locastro@hotmail.com",
+                    dni: "12345678"
                 },
             ]
 
@@ -62,6 +85,18 @@
                 return this.personas.filter((persona) => {
                     let registroCompleto = `${persona.nombre} ${persona.apellido} ${persona.dni} ${persona.correo}`
                     return registroCompleto.toLowerCase().includes(this.criterioDeBusqueda.toLowerCase())
+                });
+            },
+            filtroPorDni() {
+                return this.personas.filter((persona) => {
+                    let dni = `${persona.dni}`
+                    return dni.includes(this.criterioDeBusqueda)
+                })
+            },
+            filtroPorNombreYApellido() {
+                return this.personas.filter((persona) => {
+                    let nombreYApellido = `${persona.nombre} ${persona.apellido} ${persona.dni} ${persona.correo}`
+                    return nombreYApellido.toLowerCase().includes(this.criterioDeBusqueda.toLowerCase())
                 });
             }
         },
